@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var recommandationSchema = mongoose.Schema({
     typeRecommandation: String,
     nameRecommandation: String,
-    Adresse: String,
+    adresse: String,
     description: String,
     Visuel: String,
     telephone:Number,
