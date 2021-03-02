@@ -10,8 +10,8 @@ var hotelSchema = mongoose.Schema({
     nameHotel: String,
     Address: String,
     email: String,
-    Tel: Number,
-    Image: [imageAccueilSchema],
+    tel: Number,
+    image: [imageAccueilSchema],
 })
 
 module.exports = mongoose.model('hotels', hotelSchema)

@@ -7,7 +7,7 @@ var eventConfirmationModel = require('../models/eventConfirmation')
 var eventsModel = require('../models/events')
 var orderRestaurationModel = require('../models/ordersRestauration')
 var recommandationsModel = require('../models/recommandations')
-var restaurationModel = require('../models/restaurations')
+var foodModel = require('../models/food')
 
 
 /* GET home page. */
