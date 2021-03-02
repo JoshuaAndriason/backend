@@ -9,4 +9,4 @@ var foodSchema = mongoose.Schema({
     image: String,
     hotel:{ type: mongoose.Schema.Types.ObjectId, ref: 'hotels' },
 })
-module.exports = mongoose.model('restaurations', foodSchema)
+module.exports = mongoose.model('foods', foodSchema)

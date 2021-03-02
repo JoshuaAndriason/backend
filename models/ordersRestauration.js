@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
-
+var orderSchema = mongoose.Schema({
+    foodId:{type: mongoose.Schema.Types.ObjectId, ref: 'foods'},
+    details: [String] 
+})
 
 var orderRestaurationSchema = mongoose.Schema({
     total :Number,
@@ -8,8 +11,8 @@ var orderRestaurationSchema = mongoose.Schema({
     lieu : String ,
     heureService : Number,
     dateService : Date,
-    user :{ type: mongoose.Schema.Types.ObjectId, ref: 'users' },
-    restauration: [{ type: mongoose.Schema.Types.ObjectId, ref: 'restaurations' }] ,
+    userID :{ type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+    order: [orderSchema]
 })
 
 module.exports = mongoose.model('ordersRestauration', orderRestaurationSchema)

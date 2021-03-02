@@ -8,7 +8,7 @@ var imageAccueilSchema = mongoose.Schema({
 
 var hotelSchema = mongoose.Schema({
     nameHotel: String,
-    Address: String,
+    address: String,
     email: String,
     tel: Number,
     image: [imageAccueilSchema],
