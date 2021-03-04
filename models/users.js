@@ -5,9 +5,9 @@ var userSchema = mongoose.Schema({
     lastName: String,
     email: String,
     roomNumber : Number,
-    token:String,
-    interest : String,
-    motivation:String 
+    interest : [String],
+    motivation : String,
+    token:String
 })
 
 module.exports = mongoose.model('users', userSchema)
