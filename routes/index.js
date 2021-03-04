@@ -30,19 +30,15 @@ router.post('/sign-up', async function(req,res,next){
     const data = await userModel.findOne({
       email: req.body.emailFromFront
     })
-  
     if(data != null){
       error.push('utilisateur déjà présent')
     }
-  
     if(req.body.lastnameFromFront == ''
     || req.body.emailFromFront == ''
     || req.body.roomNumberFromFront == ''
     ){
       error.push('champs vides')
     }
-  
-  
     if(error.length == 0){
       var newUser = new userModel({
         lastName: req.body.lastnameFromFront,
@@ -57,45 +53,38 @@ router.post('/sign-up', async function(req,res,next){
         result = true
       }
     }
-    res.json({result, saveUser, error,token})
+    res.json({result, saveUser, error, token})
   })
 
-
-//POST SIGN-IN
+  //POST SIGN-IN
 router.post('/sign-in', async function(req,res,next){
 
   var user = null
   var error = []
   var token = null
   var result = false
-  
+
   if(req.body.emailFromFront == ''
   || req.body.lastnameFromFront == '' 
   || req.body.roomNumberFromFront == '' 
   ){
     error.push('champs vides')
   }
+  console.log(error.length)
 
   if(error.length == 0){
     var user = await userModel.findOne({
       lastName: req.body.lastnameFromFront,
       email: req.body.emailFromFront,
       roomNumber: req.body.roomNumberFromFront,
-
     })}
-
+console.log(req.body.emailFromFront)
+console.log('user',user)
     if(user){
-        result = true
-        token = user.token
-        console.log(token);
-      }  else {
-        result = false
-        error.push('mot de passe incorrect')
-      }
-     
+      result = true
+    }
+
   res.json({result, user, error, token})
-
-
 
 })
 
