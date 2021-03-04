@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var uid2 =require("uid2")
+var uid2 = require("uid2")
 
 var hotelModel = require('../models/hotels')
 var userModel = require('../models/users')
@@ -18,6 +18,8 @@ var foodModel = require('../models/food')
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+/* POST SIGN-UP. */
 router.post('/sign-up', async function(req,res,next){
   
     var error = []
@@ -59,36 +61,38 @@ router.post('/sign-up', async function(req,res,next){
   })
 
 
-
-
-
-
-
-
-
 //POST SIGN-IN
 router.post('/sign-in', async function(req,res,next){
 
   var user = null
   var error = []
   var token = null
+  var result = false
   
   if(req.body.emailFromFront == ''
-  || req.body.lastNameFromFront == '' 
-  || req.body.roomFromFront == '' 
+  || req.body.lastnameFromFront == '' 
+  || req.body.roomNumberFromFront == '' 
   ){
     error.push('champs vides')
   }
 
   if(error.length == 0){
-    const user = await userModel.findOne({
+    var user = await userModel.findOne({
+      lastName: req.body.lastnameFromFront,
       email: req.body.emailFromFront,
+      roomNumber: req.body.roomNumberFromFront,
+
     })}
 
-    
-  
-  
-
+    if(user){
+        result = true
+        token = user.token
+        console.log(token);
+      }  else {
+        result = false
+        error.push('mot de passe incorrect')
+      }
+     
   res.json({result, user, error, token})
 
 
