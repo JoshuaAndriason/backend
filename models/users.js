@@ -5,7 +5,8 @@ var userSchema = mongoose.Schema({
     lastName: String,
     email: String,
     roomNumber : Number,
-    interest : String,
+    interest : [String],
+    motivation : String,
     token:String
 })
 
