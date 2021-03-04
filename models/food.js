@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var restaurationSchema = mongoose.Schema({
+var foodSchema = mongoose.Schema({
     type: String,
     nameArticle: String,
     prix: Number,
@@ -9,4 +9,4 @@ var restaurationSchema = mongoose.Schema({
     image: String,
     hotel:{ type: mongoose.Schema.Types.ObjectId, ref: 'hotels' },
 })
-module.exports = mongoose.model('restaurations', restaurationSchema)
+module.exports = mongoose.model('foods', foodSchema)
