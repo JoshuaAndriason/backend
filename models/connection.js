@@ -12,5 +12,4 @@ mongoose.connect('mongodb+srv://admin:admin@cluster0.uyz6p.mongodb.net/roomDirec
         console.log(err);
     }
 )
-
-module.exports = mongoose/home/okajimmy/Desktop/HOTEL LOGICIEL/backend/myappback/models
+module.exports = mongoose
