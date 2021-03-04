@@ -13,6 +13,6 @@
     "http-errors": "~1.6.3",
     "mongoose": "^5.11.18",
     "morgan": "~1.9.1",
-    "react-native-elements": "^3.2.0"
+    "uid2": "0.0.3"
   }
 }

@@ -12,5 +12,4 @@ mongoose.connect('mongodb+srv://admin:admin@cluster0.uyz6p.mongodb.net/roomDirec
         console.log(err);
     }
 )
-
 module.exports = mongoose
