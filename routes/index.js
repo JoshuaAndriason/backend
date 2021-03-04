@@ -15,5 +15,35 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+//POST SIGN-IN
+router.post('/sign-in', async function(req,res,next){
+
+  var user = null
+  var error = []
+  var token = null
+  
+  if(req.body.emailFromFront == ''
+  || req.body.lastNameFromFront == '' 
+  || req.body.roomFromFront == '' 
+  ){
+    error.push('champs vides')
+  }
+
+  if(error.length == 0){
+    const user = await userModel.findOne({
+      email: req.body.emailFromFront,
+    })}
+
+    
+  
+  
+
+  res.json({result, user, error, token})
+
+
+
+})
+
 module.exports = router;
+
 
