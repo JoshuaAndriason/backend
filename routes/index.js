@@ -10,7 +10,7 @@ var eventsModel = require('../models/events')
 var orderRestaurationModel = require('../models/ordersRestauration')
 var recommandationsModel = require('../models/recommandations')
 var foodModel = require('../models/food')
-
+var roomDirectoryBaseModel = require('../models/roomDirectoryBase')
 
 
 
@@ -76,8 +76,7 @@ router.post('/sign-in', async function(req,res,next){
       email: req.body.emailFromFront,
       roomNumber: req.body.roomNumberFromFront,
     })}
-console.log(req.body.emailFromFront)
-console.log('user',user)
+
     if(user){
       result = true
     }
@@ -86,7 +85,46 @@ console.log('user',user)
 
 })
 
+<<<<<<< HEAD
 
+=======
+router.get('/roomDirectoryDetail/:lettre', async function(req,res,next){
+
+console.log('lettre',req.params.lettre)
+
+var filterRoomDirectory = await roomDirectoryBaseModel.find({letterFilter:req.params.lettre})
+console.log('retourBDD',filterRoomDirectory)
+var result = false;
+if(filterRoomDirectory){
+  result = true;}
+
+  res.json({result, filterRoomDirectory})
+
+})
+
+
+
+
+
+module.exports = router;
+
+//POST EVENT  
+
+  router.post('/isComing', async function(req,res,next){
+  console.log(req.body.isComing, "ggggg");
+  console.log(req.body.token, "token")
+
+  var user = await userModel.
+  findOne({token:req.body.token})
+  .populate('eventConfirmation')
+  .exec();
+
+  console.log(user, "qu'estce que tu me trouves");
+
+
+    res.json({user, token})
+  })
+>>>>>>> ca3f334e63ea614cd9a25bd71592c787626c8693
 
 module.exports = router;
 
