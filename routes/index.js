@@ -111,12 +111,13 @@ module.exports = router;
   console.log(req.body.isComing, "ggggg");
   console.log(req.body.token, "token")
 
-  var user = await eventConfirmationModel.
-  find({token:req.body.token})
+  var user = await userModel.
+  findOne({token:req.body.token})
   .populate('eventConfirmation')
   .exec();
 
   console.log(user, "qu'estce que tu me trouves");
+
 
     res.json({user, token})
   })
