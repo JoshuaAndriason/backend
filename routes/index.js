@@ -109,11 +109,17 @@ module.exports = router;
 
   router.post('/isComing', async function(req,res,next){
   console.log(req.body.isComing, "ggggg");
-    
+  console.log(req.body.token, "token")
 
-  // res.json({})
+  var user = await eventConfirmationModel.
+  find({token:req.body.token})
+  .populate('eventConfirmation')
+  .exec();
 
-})
+  console.log(user, "qu'estce que tu me trouves");
+
+    res.json({user, token})
+  })
 
 module.exports = router;
 
