@@ -9,6 +9,10 @@ var eventsModel = require('../models/events')
 var orderRestaurationModel = require('../models/ordersRestauration')
 var recommandationsModel = require('../models/recommandations')
 var foodModel = require('../models/food')
+var roomDirectoryBaseModel = require('../models/roomDirectoryBase')
+
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -75,17 +79,66 @@ console.log('user',user)
   res.json({result, user, error, token})
 })
 
+  //POST SIGN-IN
+router.post('/sign-in', async function(req,res,next){
+
+  var user = null
+  var error = []
+  var token = null
+
+  var result = false
+  if(req.body.emailFromFront == ''
+  || req.body.lastnameFromFront == '' 
+  || req.body.roomNumberFromFront == '' 
+  ){
+    error.push('champs vides')
+  }
+  console.log(error.length)
+
+  if(error.length == 0){
+    var user = await userModel.findOne({
+      lastName: req.body.lastnameFromFront,
+      email: req.body.emailFromFront,
+      roomNumber: req.body.roomNumberFromFront,
+    })}
+
+    if(user){
+      result = true
+    }
+
+  res.json({result, user, error, token})
+
+})
+
+router.get('/roomDirectoryDetail/:lettre', async function(req,res,next){
+
+console.log('lettre',req.params.lettre)
+
+var filterRoomDirectory = await roomDirectoryBaseModel.find({letterFilter:req.params.lettre})
+console.log('retourBDD',filterRoomDirectory)
+var result = false;
+if(filterRoomDirectory){
+  result = true;}
+
+  res.json({result, filterRoomDirectory})
+
+})
 
 
-    //POST ROOM DIRECTORY BY LETTER
-router.get('/RoomDirectoryDetail/:letter', function(req, res, next) {
-  console.log(req.params.letter)
-});
 
 
 
+module.exports = router;
 
+//POST EVENT  
 
+  router.post('/isComing', async function(req,res,next){
+  console.log(req.body.isComing, "ggggg");
+    
+
+  // res.json({})
+
+})
 
 
 module.exports = router;
