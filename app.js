@@ -8,12 +8,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-<<<<<<< HEAD
-var questionnaryRouter = require('./routes/questionnary');
-=======
+var questionnaryRouter = require('./routes/questionnary')
 
-
->>>>>>> ca3f334e63ea614cd9a25bd71592c787626c8693
 require('./models/connection');
 
 var app = express();
