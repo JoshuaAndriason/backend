@@ -105,3 +105,15 @@ if(filterRoomDirectory){
 
 module.exports = router;
 
+//POST EVENT  
+
+  router.post('/isComing', async function(req,res,next){
+  console.log(req.body.isComing, "ggggg");
+    
+
+  // res.json({})
+
+})
+
+module.exports = router;
+
