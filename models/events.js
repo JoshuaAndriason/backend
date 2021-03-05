@@ -5,7 +5,7 @@ var eventSchema = mongoose.Schema({
     dateEvents: Date,
     description: String,
     image: String,
-    isComing: Boolean,
+
     hotel:{ type: mongoose.Schema.Types.ObjectId, ref: 'hotels' },
 })
 module.exports = mongoose.model('events', eventSchema)
