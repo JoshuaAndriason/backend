@@ -12,3 +12,13 @@ var recommandationsModel = require('../models/recommandations')
 var foodModel = require('../models/food')
 
 
+
+  //POST EVENT SCREEN
+  router.post('/isComing', async function(req,res,next){
+      console.log(req.body.isComing, "ggggg");
+
+    // res.json({})
+  
+  })
+  
+  module.exports = router;
