@@ -85,9 +85,6 @@ router.post('/sign-in', async function(req,res,next){
 
 })
 
-<<<<<<< HEAD
-
-=======
 router.get('/roomDirectoryDetail/:lettre', async function(req,res,next){
 
 console.log('lettre',req.params.lettre)
@@ -124,7 +121,6 @@ module.exports = router;
 
     res.json({user, token})
   })
->>>>>>> ca3f334e63ea614cd9a25bd71592c787626c8693
 
 module.exports = router;
 
