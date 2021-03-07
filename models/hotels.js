@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
 
 
-var imageAccueilSchema = mongoose.Schema({
+var imagesHotel = mongoose.Schema({
     serviceName: String,
-    urlImage: String,
 })
 
 var hotelSchema = mongoose.Schema({
@@ -11,7 +10,8 @@ var hotelSchema = mongoose.Schema({
     address: String,
     email: String,
     tel: Number,
-    image: [imageAccueilSchema],
+    imageHotel: String,
+    images: imagesHotel,
 })
 
 module.exports = mongoose.model('hotels', hotelSchema)
