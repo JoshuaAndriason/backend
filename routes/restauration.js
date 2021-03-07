@@ -18,7 +18,21 @@ router.get("/menus", async function(req, res){
     if(menus.length > 0){
         console.log("dd");
         res.json({result: menus})
-    }else(console.log("error"))
+    }else{
+        res.json({result: "no menus found"})
+    }
+})
+
+router.get("/food/:id", async function(req, res){
+    const foodID = req.params.id
+    const food = await foodModel.findById(foodID)
+    //handle error
+    if(food){
+        console.log("dd");
+        res.json({result: food})
+    }else{
+        res.json({result: "no food found "})
+    }
 })
 
 module.exports = router;
