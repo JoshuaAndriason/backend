@@ -9,5 +9,5 @@ var userSchema = mongoose.Schema({
     motivation : String,
     token:String
 })
-
+ 
 module.exports = mongoose.model('users', userSchema)
