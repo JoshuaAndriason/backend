@@ -9,7 +9,7 @@ var eventConfirmationModel = require('../models/eventConfirmation')
 var eventsModel = require('../models/events')
 var orderRestaurationModel = require('../models/ordersRestauration')
 var recommandationsModel = require('../models/recommandations')
-var foodModel = require('../models/food')
+var foodModel = require('../models/foods')
 
 router.post('/motivation', async function(req, res, next) {
     const motivation = req.body.motivation

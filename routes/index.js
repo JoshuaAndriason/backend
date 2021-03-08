@@ -8,7 +8,7 @@ var eventConfirmationModel = require('../models/eventConfirmation')
 var eventsModel = require('../models/events')
 var orderRestaurationModel = require('../models/ordersRestauration')
 var recommandationsModel = require('../models/recommandations')
-var foodModel = require('../models/food')
+var foodModel = require('../models/foods')
 var roomDirectoryBaseModel = require('../models/roomDirectoryBase')
 
 
@@ -127,8 +127,6 @@ if(filterRoomDirectory){
 
 
 
-
-module.exports = router;
 
 //POST EVENT  
 
