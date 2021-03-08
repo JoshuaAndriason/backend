@@ -148,5 +148,24 @@ if(filterRoomDirectory){
     res.json({user, token})
   })
 
+//GET HOME IMAGE
+router.get("/image", async function(req, res){
+  const data = await hotelModel.find({})
+  if(data.length > 0){ 
+      res.json({result: data})
+  }else{
+      res.json({result: "no menus found"})
+  }
+})
+
+//GET RECOMMENDATION
+router.get("/recommendation", async function(req, res){
+  const data = await recommandationsModel.find({})
+  if(data.length > 0){
+      res.json({result: data})
+  }else{
+      res.json({result: "no menus found"})
+  }
+})
 
 module.exports = router;
