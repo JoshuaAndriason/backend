@@ -100,53 +100,70 @@ if(filterRoomDirectory){
 
 })
 
-//POST EVENT CONFIRMATION  
-  router.post('/isComing', async function(req,res,next){
-  console.log(req.body.isComing, "ggggg");
-  console.log(req.body.token, "token")
+router.get('/roomDirectoryDetail/:badge', async function(req,res,next){
 
-  var user = await userModel.find({token:req.body.token})
-  console.log(user.indexOf,'userrrrrrrrrrr')
-  var newEventConfirmation = new eventConfirmationModel({
-    isComing: req.body.req.body.isComing,
+  console.log('lettre',req.params.badge)
+  
+  var filterRoomDirectory = await roomDirectoryBaseModel.find({itemName:req.params.badge})
+  console.log('retourBDD',filterRoomDirectory)
+  var result = false;
+  if(filterRoomDirectory){
+    result = true;}
+  
+    res.json({result, filterRoomDirectory})
+  
   })
 
-  saveNewEventConfirmation = await newEventConfirmation.save()
-  if(saveNewEventConfirmation){
-    result = true
-  } 
- console.log('saveNewEventConfirmation:',saveNewEventConfirmation) 
 
-    res.json({})
-  })
 //Get EVENT (Carousel & detail EVENT)
   router.get('/events', async function(req,res,next){
   
    var events = await eventsModel.find()
-console.log('retourBDD back',events)
 
 var result = false;
 if(events){
   result = true;
 }
-console.log(events,'events')
       res.json({result,events})
     })
  
 //Get ROOM DIRECTORY DETAILS
 
 router.get('/events/:id', async function(req,res,next){
-
-  console.log('lettre',req.params.id)
   
   var event = await eventsModel.findById(req.params.id)
-  console.log('retourBDD',event)
   var result = false;
   if(event){
     result = true;}
   
     res.json({result, event})
   
+  })
+  //POST EVENT CONFIRMATION  
+  router.post('/confirmation', async function(req,res,next){
+
+
+    result = req.body.isComing
+    result2 = req.body.token
+    result3 = req.body.eventId
+    console.log(req.body.isComing, "ggggg");
+    console.log(req.body.token, "token")
+    console.log(req.body.eventId, "eventid")
+
+    var user = await userModel.findOne({
+      token: req.body.token,
+    })
+    console.log(user.id,'useeeeeeeer')
+    var idUser = user.id
+    var newEventConfirmation = new eventConfirmationModel({
+      user: idUser,
+      event: req.body.eventId,
+      isComing: req.body.isComing
+    })
+    saveConfirmationEvent = await newEventConfirmation.save()
+console.log ('dfdskjfddkjjdsjdskj',saveConfirmationEvent)
+
+    res.json({result,result2})
   })
 
 module.exports = router;
