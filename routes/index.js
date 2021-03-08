@@ -149,4 +149,20 @@ router.get('/events/:id', async function(req,res,next){
   
   })
 
+//Get ROOM DIRECTORY BADGE
+
+  router.get('/roomDirectoryBadge/:badge', async function(req,res,next){
+
+    console.log('badge',req.params.badge)
+  
+    var filterRoomDirectory = await roomDirectoryBaseModel.find({itemName:req.params.badge})
+    console.log('retourBDD',filterRoomDirectory)
+    var result = false;
+    if(filterRoomDirectory){
+      result = true;}
+  
+      res.json({result, filterRoomDirectory})
+  
+    })
+  
 module.exports = router;
