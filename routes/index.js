@@ -55,32 +55,6 @@ router.post('/sign-up', async function(req,res,next){
     }
     res.json({result, saveUser, error, token})
   })
-  //POST SIGN-IN
-router.post('/sign-in', async function(req,res,next){
-  var user = null
-  var error = []
-  var token = null
-  var result = false
-  if(req.body.emailFromFront == ''
-  || req.body.lastnameFromFront == '' 
-  || req.body.roomNumberFromFront == '' 
-  ){
-    error.push('champs vides')
-  }
-  console.log(error.length)
-  if(error.length == 0){
-    var user = await userModel.findOne({
-      lastName: req.body.lastnameFromFront,
-      email: req.body.emailFromFront,
-      roomNumber: req.body.roomNumberFromFront,
-    })}
-console.log(req.body.emailFromFront)
-console.log('user',user)
-    if(user){
-      result = true
-    }
-  res.json({result, user, error, token})
-})
 
   //POST SIGN-IN
 router.post('/sign-in', async function(req,res,next){
@@ -100,18 +74,18 @@ router.post('/sign-in', async function(req,res,next){
 
   if(error.length == 0){
     var user = await userModel.findOne({
-      lastName: req.body.lastnameFromFront,
       email: req.body.emailFromFront,
-      roomNumber: req.body.roomNumberFromFront,
     })}
 
     if(user){
+      token = user.token
       result = true
     }
 
   res.json({result, user, error, token})
 
 })
+//Get ROOM DIRECTORY DETAILS
 
 router.get('/roomDirectoryDetail/:lettre', async function(req,res,next){
 
@@ -127,26 +101,30 @@ if(filterRoomDirectory){
 
 })
 
-
-
-
-
-//POST EVENT  
-
+//POST EVENT CONFIRMATION  
   router.post('/isComing', async function(req,res,next){
   console.log(req.body.isComing, "ggggg");
   console.log(req.body.token, "token")
 
-  var user = await userModel.
-  findOne({token:req.body.token})
-  .populate('eventConfirmation')
-  .exec();
-
-  console.log(user, "qu'estce que tu me trouves");
-
-
-    res.json({user, token})
+  var user = await userModel.find({token:req.body.token})
+  console.log(user.indexOf,'userrrrrrrrrrr')
+  var newEventConfirmation = new eventConfirmationModel({
+    isComing: req.body.req.body.isComing,
   })
+
+  saveNewEventConfirmation = await newEventConfirmation.save()
+  if(saveNewEventConfirmation){
+    result = true
+  } 
+ console.log('saveNewEventConfirmation:',saveNewEventConfirmation) 
+
+    res.json({})
+  })
+//Get EVENT (Carousel & detail EVENT)
+  router.get('/events', async function(req,res,next){
+  
+   var events = await eventsModel.find()
+console.log('retourBDD back',events)
 
 //GET HOME IMAGE
 router.get("/image", async function(req, res){
@@ -167,5 +145,28 @@ router.get("/recommendation", async function(req, res){
       res.json({result: "no menus found"})
   }
 })
+var result = false;
+if(events){
+  result = true;
+}
+console.log(events,'events')
+      res.json({result,events})
+    })
+ 
+//Get ROOM DIRECTORY DETAILS
+
+router.get('/events/:id', async function(req,res,next){
+
+  console.log('lettre',req.params.id)
+  
+  var event = await eventsModel.findById(req.params.id)
+  console.log('retourBDD',event)
+  var result = false;
+  if(event){
+    result = true;}
+  
+    res.json({result, event})
+  
+  })
 
 module.exports = router;
