@@ -40,21 +40,21 @@ router.get("/food/:type", async function (req, res) {
 
   try {
     if (foodType == "diner") {
-        const food = await foodModel.find({
-          $or: [{ type: "Desserts" }, { type: "Plats" }, { type: "Entrées" }],
-        });
-        res.json({ result: food });
-      } else if (foodType === "A La Carte") {
-        const food = await foodModel.find({
-            type: "A La Carte"
-        });
-        console.log('food:', food)
-      }
+      const food = await foodModel.find({
+        $or: [{ type: "Desserts" }, { type: "Plats" }, { type: "Entrées" }],
+      });
+      res.json({ result: food });
+    } else if (foodType === "A La Carte") {
+      const food = await foodModel.find({
+        type: "A La Carte",
+      });
+      console.log("food:", food);
+    }
   } catch (error) {
-      console.log(error);
-      res.json({ result:error})
+    console.log(error);
+    res.json({ result: error });
   }
- 
+
   // const menus = await foodModel.find({})
   // console.log(menus);
   // if(menus.length > 0){
