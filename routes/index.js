@@ -157,7 +157,7 @@ if(filterRoomDirectory){
   router.get('/Events', async function(req,res,next){
   
    var events = await eventsModel.find()
-console.log('retourBDD',filterRoomDirectory)
+console.log('retourBDD back',events)
 
 var result = false;
 if(events){
