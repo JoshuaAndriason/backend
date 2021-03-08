@@ -9,13 +9,14 @@ var eventConfirmationModel = require('../models/eventConfirmation')
 var eventsModel = require('../models/events')
 var orderRestaurationModel = require('../models/ordersRestauration')
 var recommandationsModel = require('../models/recommandations')
-var foodModel = require('../models/food')
+var foodModel = require('../models/foods')
 
-router.get('/motivation/:motivation', async function(req, res, next) {
-    const motivation = req.params.motivation
-   
+router.post('/motivation', async function(req, res, next) {
+    const motivation = req.body.motivation
+    const token = req.body.token
+   console.log(token);
     const updateMotivation = await userModel.updateOne(
-      {token: "uZGspznpAsH5E3qDXC4UawHy6siEE1hc"},
+      {token: token},
       {
         motivation: motivation
       }
@@ -29,14 +30,13 @@ router.get('/motivation/:motivation', async function(req, res, next) {
   }
   );
 
-  router.get('/interest/:interest', async function(req, res, next) {
-    const interest = req.params.interest
+  router.post('/interest/', async function(req, res, next) {
+    const interest = req.body.interest
+    const token = req.body.token
    
     const updateMotivation = await userModel.updateOne(
-      {token: "uZGspznpAsH5E3qDXC4UawHy6siEE1hc"},
-      {
-        interest: interest
-      }
+      {token: token},
+      { $push: { interest: interest } }
     )
     
     if(updateMotivation.n === 0){
