@@ -18,6 +18,14 @@ var roomDirectoryBaseModel = require('../models/roomDirectoryBase')
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+
+router.get('/home', function(req, res, next) {
+
+
+  res.render('index', { title: 'Express' });
+});
+
 router.post('/sign-up', async function(req,res,next){
   
     var error = []
@@ -72,18 +80,18 @@ router.post('/sign-in', async function(req,res,next){
 
   if(error.length == 0){
     var user = await userModel.findOne({
-      lastName: req.body.lastnameFromFront,
       email: req.body.emailFromFront,
-      roomNumber: req.body.roomNumberFromFront,
     })}
 
     if(user){
+      token = user.token
       result = true
     }
 
   res.json({result, user, error, token})
 
 })
+//Get ROOM DIRECTORY DETAILS
 
 router.get('/roomDirectoryDetail/:lettre', async function(req,res,next){
 
@@ -99,10 +107,6 @@ if(filterRoomDirectory){
 
 })
 
-
-
-
-
 module.exports = router;
 
 //POST EVENT  
@@ -111,15 +115,19 @@ module.exports = router;
   console.log(req.body.isComing, "ggggg");
   console.log(req.body.token, "token")
 
-  var user = await userModel.
-  findOne({token:req.body.token})
-  .populate('eventConfirmation')
-  .exec();
+  var user = await userModel.find({token:req.body.token})
+  console.log(user.indexOf,'userrrrrrrrrrr')
+  var newEventConfirmation = new eventConfirmationModel({
+    isComing: req.body.req.body.isComing,
+  })
 
-  console.log(user, "qu'estce que tu me trouves");
+  saveNewEventConfirmation = await newEventConfirmation.save()
+  if(saveNewEventConfirmation){
+    result = true
+  } 
+ console.log('saveNewEventConfirmation:',saveNewEventConfirmation) 
 
-
-    res.json({user, token})
+    res.json({})
   })
 
 module.exports = router;
