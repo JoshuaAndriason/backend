@@ -154,7 +154,7 @@ if(filterRoomDirectory){
     res.json({})
   })
 
-  router.get('/Events', async function(req,res,next){
+  router.get('/events', async function(req,res,next){
   
    var events = await eventsModel.find()
 console.log('retourBDD back',events)
@@ -167,10 +167,5 @@ console.log(events,'events')
       res.json({result,events})
     })
   
-
-
-
-
-
 
 module.exports = router;
