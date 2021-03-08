@@ -18,13 +18,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-
-router.get('/home', function(req, res, next) {
-
-
-  res.render('index', { title: 'Express' });
-});
-
+/* SIGNUP */
 router.post('/sign-up', async function(req,res,next){
 
     var error = []
@@ -60,32 +54,6 @@ router.post('/sign-up', async function(req,res,next){
     }
     res.json({result, saveUser, error,token})
   })
-  //POST SIGN-IN
-router.post('/sign-in', async function(req,res,next){
-  var user = null
-  var error = []
-  var token = null
-  var result = false
-  if(req.body.emailFromFront == ''
-  || req.body.lastnameFromFront == '' 
-  || req.body.roomNumberFromFront == '' 
-  ){
-    error.push('champs vides')
-  }
-  console.log(error.length)
-  if(error.length == 0){
-    var user = await userModel.findOne({
-      lastName: req.body.lastnameFromFront,
-      email: req.body.emailFromFront,
-      roomNumber: req.body.roomNumberFromFront,
-    })}
-console.log(req.body.emailFromFront)
-console.log('user',user)
-    if(user){
-      result = true
-    }
-  res.json({result, user, error, token})
-})
 
   //POST SIGN-IN
 router.post('/sign-in', async function(req,res,next){
@@ -132,9 +100,7 @@ if(filterRoomDirectory){
 
 })
 
-
-//POST EVENT  
-
+//POST EVENT CONFIRMATION  
   router.post('/isComing', async function(req,res,next){
   console.log(req.body.isComing, "ggggg");
   console.log(req.body.token, "token")
@@ -153,8 +119,8 @@ if(filterRoomDirectory){
 
     res.json({})
   })
-
-  router.get('/Events', async function(req,res,next){
+//Get EVENT (Carousel & detail EVENT)
+  router.get('/events', async function(req,res,next){
   
    var events = await eventsModel.find()
 console.log('retourBDD back',events)
@@ -166,7 +132,22 @@ if(events){
 console.log(events,'events')
       res.json({result,events})
     })
+ 
+//Get ROOM DIRECTORY DETAILS
+
+router.get('/events/:id', async function(req,res,next){
+
+  console.log('lettre',req.params.id)
   
+  var event = await eventsModel.findById(req.params.id)
+  console.log('retourBDD',event)
+  var result = false;
+  if(event){
+    result = true;}
+  
+    res.json({result, event})
+  
+  })
 
 
 
