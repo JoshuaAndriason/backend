@@ -144,6 +144,7 @@ router.get('/events/:id', async function (req, res, next) {
   var result = false;
   if (event) {
     result = true;
+    res.json({ result, event })
   }
   res.json({ result, event })
 })
