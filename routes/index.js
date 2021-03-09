@@ -32,13 +32,14 @@ router.post('/sign-up', async function (req, res, next) {
   var error = []
   var result = false
   var saveUser = null
+  var token = null
 
 
   const data = await userModel.findOne({
     email: req.body.emailFromFront
   })
   if (data != null) {
-    error.push('utilisateur déjà présent')
+    error.push('Vous êtes déja inscrit. Veuillez vous connecter directement.')
   }
   if (req.body.lastnameFromFront == ''
     || req.body.emailFromFront == ''
@@ -70,28 +71,46 @@ router.post('/sign-in', async function (req, res, next) {
   var error = []
   var token = null
   var result = false
+
+  //CONDITION SI CHAMPS VIDE A CORRIGER CAR ENVOIE EGALEMENT UNE PROPOSITION DINSCRIPTION ALORS QUE PAS DANS LA MEME CONDITION
+
   if (req.body.emailFromFront == ''
     || req.body.lastnameFromFront == ''
     || req.body.roomNumberFromFront == ''
   ) {
-    error.push('champs vides')
+    error.push("champs vides. Merci de saisir tous les champs")
   }
-  console.log(error.length)
+  console.log(error.length, "ugddjdgjdhjs")
+
+
+  // SI CHAMPS REMPLI TU ENVOIES LE TOUT 
+  // SI EMAIL NON CORRECT VS BDD ALORS TU DEMANDES DE S'INSCRIRE DABORD
   if (error.length == 0) {
+
     var user = await userModel.findOne({
       lastName: req.body.lastnameFromFront,
       email: req.body.emailFromFront,
       roomNumber: req.body.roomNumberFromFront,
     })
+    console.log("user+++++: ", user)
   }
-  console.log(req.body.emailFromFront)
+  console.log(req.body.emailFromFront, "j'ai mon email recupéré")
   console.log('user', user)
-  if (user) {
-    result = true
+
+  if(user){
+    if(req.body.emailFromFront === user.email){
+      result = true
+      token = user.token
+    } else {
+      result = false
+      error.push('email incorrect')
+    } 
+  } else {
+    error.push("Veuillez d'abord vous inscrire avant de vous connecter ! Merci.")
   }
+  console.log(user, "je suis inscrite")
   res.json({ result, user, error, token })
 })
-
 
 // GET ROOM DIRECTORY LETTER
 router.get('/roomDirectoryDetail/:lettre', async function (req, res, next) {
