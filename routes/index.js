@@ -150,6 +150,18 @@ router.get("/recommendation", async function(req, res){
   
       res.json({result, filterRoomDirectory})
   
-    })
+    });
+
+    //Get EVENT (Carousel & detail EVENT)
+  router.get('/events', async function(req,res,next){
+
+    var events = await eventsModel.find()
+ 
+ var result = false;
+ if(events){
+   result = true;
+ }
+       res.json({result,events})
+     })
   
 module.exports = router;
