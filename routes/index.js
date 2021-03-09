@@ -145,6 +145,7 @@ router.get('/events/:id', async function (req, res, next) {
   if (event) {
     result = true;
   }
+  res.json({ result, event })
 })
 
 //POST EVENT CONFIRMATION  
