@@ -202,7 +202,7 @@ router.get("/recommendation", async function (req, res) {
   }
 })
 
-//GET COMMANDE/ EVENT /USER
+//GET ORDER/ EVENT /USER
 router.post('/account', async function (req, res, next) {
 
   console.log(req.body.token, "token")
@@ -238,6 +238,22 @@ router.post('/account', async function (req, res, next) {
 
   res.json({ resultOrder,resultUser,resultEvent,saveUser,saveEvents,saveOrder})
 })
+
+//GET ORDER by ID
+router.get('/account/:idOrder', async function(req,res,next){
+
+  console.log('badge',req.params.idOrder)
+
+  var filterOrder = await orderRestaurationModel.find({foodID:req.params.idOrder}).populate('order.foodID').exec()
+  console.log('retourBDD',filterOrder)
+  var result = false;
+  if(filterOrder){
+    result = true;}
+
+    res.json({result, filterOrder})
+
+  });
+
 
 
 

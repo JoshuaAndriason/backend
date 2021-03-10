@@ -9,7 +9,7 @@ var orderRestaurationSchema = mongoose.Schema({
     quantity: Number,
     date_Paiement : Date,
     lieu : String ,
-    heureService : Number,
+    heureService : String,
     dateService : Date,
     userID :{ type: mongoose.Schema.Types.ObjectId, ref: 'users' },
     order: [orderSchema]
