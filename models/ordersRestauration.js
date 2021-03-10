@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var orderSchema = mongoose.Schema({
-    foodId:{type: mongoose.Schema.Types.ObjectId, ref: 'foods'},
-    details: [String] 
+    foodID:{type: mongoose.Schema.Types.ObjectId, ref: 'foods'},
+    details: [Object]
 })
 
 var orderRestaurationSchema = mongoose.Schema({
