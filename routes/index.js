@@ -35,6 +35,7 @@ router.post('/sign-up', async function (req, res, next) {
   var token = null
 console.log(typeof req.body.lastnameFromFront)
 
+// CONDITIONS SIGN UP AVEC MESSAGES DERREURS SUR CHAMPS VIDE ET VOUS ETES DEJA INSCRITS
   const data = await userModel.findOne({
     email: req.body.emailFromFront
   })
@@ -76,7 +77,7 @@ router.post('/sign-in', async function (req, res, next) {
   var token = null
   var result = false
 
-  //CONDITION SI CHAMPS VIDE A CORRIGER CAR ENVOIE EGALEMENT UNE PROPOSITION DINSCRIPTION ALORS QUE PAS DANS LA MEME CONDITION
+// CONDITIONS SIGN UP AVEC MESSAGES DERREURS SUR CHAMPS VIDE ET VOUS ETES DEJA INSCRITS
 
   if (req.body.emailFromFront == ''
     || req.body.lastnameFromFront == ''
