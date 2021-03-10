@@ -235,22 +235,34 @@ router.post('/account', async function (req, res, next) {
   if (saveOrder) {
     resultOrder = true;
   }
+  
 
   res.json({ resultOrder,resultUser,resultEvent,saveUser,saveEvents,saveOrder})
 })
 
 //GET ORDER by ID
 router.get('/account/:idOrder', async function(req,res,next){
+console.log('req.params.idOrder',req.params.idOrder)
+console.log('req token',req.params.token)
 
-  console.log('badge',req.params.idOrder)
+  var saveOrder = await orderRestaurationModel.findOne({_id:req.params.idOrder})
+  console.log('retoursaveOrder',saveOrder)
 
-  var filterOrder = await orderRestaurationModel.find({foodID:req.params.idOrder}).populate('order.foodID').exec()
-  console.log('retourBDD',filterOrder)
-  var result = false;
-  if(filterOrder){
-    result = true;}
+  idfood = saveOrder.order[0].foodID
+  console.log('cccc',idfood)
+  
+  var saveFood = await foodModel.findById(idfood)
+  console.log('aaaaaaaa',saveFood)
 
-    res.json({result, filterOrder})
+
+
+  var resultOrder = false;
+  if(saveOrder){
+    resultOrder = true;}
+    if(saveFood){
+      resultFood = true;}
+
+    res.json({resultFood,resultOrder, saveFood,saveOrder})
 
   });
 
