@@ -160,6 +160,7 @@ router.get('/events', async function (req, res, next) {
 router.get('/events/:id', async function (req, res, next) {
 
   var event = await eventsModel.findById(req.params.id)
+
   var result = false;
   if (event) {
     result = true;
@@ -170,17 +171,10 @@ router.get('/events/:id', async function (req, res, next) {
 
 //POST EVENT CONFIRMATION  
 router.post('/confirmation', async function (req, res, next) {
-  result = req.body.isComing
-  result2 = req.body.token
-  result3 = req.body.eventId
-  console.log(req.body.isComing, "ggggg");
-  console.log(req.body.token, "token")
-  console.log(req.body.eventId, "eventid")
 
   var user = await userModel.findOne({
     token: req.body.token,
   })
-  console.log(user.id, 'useeeeeeeer')
   var idUser = user.id
   var newEventConfirmation = new eventConfirmationModel({
     user: idUser,
@@ -188,9 +182,13 @@ router.post('/confirmation', async function (req, res, next) {
     isComing: req.body.isComing
   })
   saveConfirmationEvent = await newEventConfirmation.save()
-  console.log('dfdskjfddkjjdsjdskj', saveConfirmationEvent)
 
-  res.json({ result, result2 })
+  var result = false;
+  if (saveConfirmationEvent) {
+    result = true;
+  }
+
+  res.json({ result,saveConfirmationEvent })
 })
 
 
@@ -202,6 +200,43 @@ router.get("/recommendation", async function (req, res) {
   } else {
     res.json({ result: "no menus found" })
   }
+})
+
+//GET COMMANDE/ EVENT /USER
+router.post('/account', async function (req, res, next) {
+
+  console.log(req.body.token, "token")
+
+  var saveUser = await userModel.findOne({
+    token: req.body.token,
+  })
+  console.log(saveUser.id, 'useeeeeeeer')
+  var idUser = saveUser.id
+  var saveEvents = await eventConfirmationModel.find({
+    user: idUser,
+  }).populate('event').exec()
+  console.log('saveEvents',saveEvents)
+  
+
+ var saveOrder = await orderRestaurationModel.find({
+  userID: idUser,
+  }).populate('order').exec()
+  console.log('saveOrder',saveOrder)
+
+  var resultUser = false;
+  if (saveUser) {
+    resultUser = true;
+  }
+  var resultEvent = false;
+  if (saveEvents) {
+    resultEvent = true;
+  }
+  var resultOrder = false;
+  if (saveOrder) {
+    resultOrder = true;
+  }
+
+  res.json({ resultOrder,resultUser,resultEvent,saveUser,saveEvents,saveOrder})
 })
 
 
