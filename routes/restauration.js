@@ -9,7 +9,7 @@ var eventsModel = require("../models/events");
 var orderRestaurationModel = require("../models/ordersRestauration");
 var recommandationsModel = require("../models/recommandations");
 var foodModel = require("../models/foods");
-var roomDirectoryBaseModel = require("../models/roomDirectoryBase");
+
 
 // get all menus
 router.get("/menus", async function (req, res) {
@@ -39,7 +39,6 @@ router.get("/breakfast/:id", async function (req, res) {
 // get all diner & a la carte document
 router.get("/food/:type", async function (req, res) {
   const foodType = req.params.type;
-  console.log("foodType:", foodType);
 
   try {
     if (foodType == "diner") {
@@ -60,27 +59,34 @@ router.get("/food/:type", async function (req, res) {
   }
 });
 
+
+// send the order to the BDD 
 router.post("/order", async function (req, res) {
-  console.log("details=============:", req.body.details);
+  
+  var saveUser = await userModel.findOne({
+    token: req.body.token,
+  })
+  
+  var idUser = saveUser.id
+
   let obj = {};
-  const newOrder = await new orderRestaurationModel({
+  const newOrder = new orderRestaurationModel({
     total: req.body.price,
     quantity: req.body.quantity,
     date_Paiement: req.body.date,
     lieu: req.body.lieu,
     heureService: req.body.heure,
     dateService: req.body.date,
-    userID: "60463d4056f89429cf9dc49f",
+    userID: idUser,
       order: [
         {
-
           foodID: req.body.foodID,
-          details: obj[Object.key(req.body.details)] = Object.key(req.body.details)
+          details: obj[Object.keys(req.body.details)] = Object.values(req.body.details)
         }
       ],
     
   });
-  //console.log('saveOrder:', newOrder)
+  
   const order = await newOrder.save();
   console.log("order====>:", order);
 });
