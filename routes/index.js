@@ -33,21 +33,22 @@ router.post('/sign-up', async function (req, res, next) {
   var result = false
   var saveUser = null
   var token = null
-
+console.log(typeof req.body.lastnameFromFront)
 
   const data = await userModel.findOne({
     email: req.body.emailFromFront
   })
-  if (data != null) {
+  if (data != null && req.body.lastnameFromFront != "undefined" && req.body.emailFromFront != "undefined"  && req.body.roomNumberFromFront != "undefined" 
+    ) {
     error.push('Vous êtes déja inscrit. Veuillez vous connecter directement.')
   }
-  if (req.body.lastnameFromFront == ''
-    || req.body.emailFromFront == ''
-    || req.body.roomNumberFromFront == ''
+  else if (req.body.lastnameFromFront == "undefined"
+    || req.body.emailFromFront == "undefined"
+    || req.body.roomNumberFromFront == "undefined"
   ) {
     error.push('champs vides')
   }
-  if (error.length == 0) {
+  else if (error.length == 0) {
     var newUser = new userModel({
       lastName: req.body.lastnameFromFront,
       email: req.body.emailFromFront,
@@ -61,7 +62,10 @@ router.post('/sign-up', async function (req, res, next) {
       result = true
     }
   }
-  res.json({ result, saveUser, error, token })
+  console.log(error)
+
+   res.json({ result, saveUser, error, token })
+  
 })
 
 
