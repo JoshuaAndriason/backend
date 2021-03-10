@@ -33,21 +33,23 @@ router.post('/sign-up', async function (req, res, next) {
   var result = false
   var saveUser = null
   var token = null
+console.log(typeof req.body.lastnameFromFront)
 
-
+// CONDITIONS SIGN UP AVEC MESSAGES DERREURS SUR CHAMPS VIDE ET VOUS ETES DEJA INSCRITS
   const data = await userModel.findOne({
     email: req.body.emailFromFront
   })
-  if (data != null) {
+  if (data != null && req.body.lastnameFromFront != "undefined" && req.body.emailFromFront != "undefined"  && req.body.roomNumberFromFront != "undefined" 
+    ) {
     error.push('Vous êtes déja inscrit. Veuillez vous connecter directement.')
   }
-  if (req.body.lastnameFromFront == ''
-    || req.body.emailFromFront == ''
-    || req.body.roomNumberFromFront == ''
+  else if (req.body.lastnameFromFront == "undefined"
+    || req.body.emailFromFront == "undefined"
+    || req.body.roomNumberFromFront == "undefined"
   ) {
     error.push('champs vides')
   }
-  if (error.length == 0) {
+  else if (error.length == 0) {
     var newUser = new userModel({
       lastName: req.body.lastnameFromFront,
       email: req.body.emailFromFront,
@@ -61,7 +63,10 @@ router.post('/sign-up', async function (req, res, next) {
       result = true
     }
   }
-  res.json({ result, saveUser, error, token })
+  console.log(error)
+
+   res.json({ result, saveUser, error, token })
+  
 })
 
 
@@ -72,7 +77,7 @@ router.post('/sign-in', async function (req, res, next) {
   var token = null
   var result = false
 
-  //CONDITION SI CHAMPS VIDE A CORRIGER CAR ENVOIE EGALEMENT UNE PROPOSITION DINSCRIPTION ALORS QUE PAS DANS LA MEME CONDITION
+// CONDITIONS SIGN UP AVEC MESSAGES DERREURS SUR CHAMPS VIDE ET VOUS ETES DEJA INSCRITS
 
   if (req.body.emailFromFront == ''
     || req.body.lastnameFromFront == ''
