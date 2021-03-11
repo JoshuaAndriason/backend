@@ -36,7 +36,7 @@ router.get("/breakfast/:id", async function (req, res) {
   }
 });
 
-// get all diner & a la carte document
+// get all diner & a la carte documents
 router.get("/food/:type", async function (req, res) {
   const foodType = req.params.type;
 
@@ -82,13 +82,17 @@ router.post("/order", async function (req, res) {
         {
           foodID: req.body.foodID,
           details: obj[Object.keys(req.body.details)] = Object.values(req.body.details)
-        }
+        }, 
       ],
     
   });
   
   const order = await newOrder.save();
-  console.log("order====>:", order);
+  if(order.userID){
+    res.json({result : "order saved"})
+  }else if(!order.userID){
+    res.json({result : "order has not "})
+  }
 });
 
 module.exports = router;
